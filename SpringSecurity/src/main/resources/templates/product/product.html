@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Продукты </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="ms-4">
+  <h3>Доступные товары</h3>
+    <div th:each="product: ${product}">
+        <img th:src="'/img/'+${product.imageList[0].getFileName()}"width="200px">
+        <br>
+        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+
+        <p  class="fw-semibold" th:text="'Наименоване: '+${product.getTitle()}" width="200px">
+<!--        <p th:text="'Описание: '+${product.getDescription()}">-->
+        <p th:text="'Цена: '+${product.getPrice()}">
+<!--        <p th:text="'Склад: '+${product.getWarehouse()}">-->
+<!--        <p th:text="'Продавец: '+${product.getSeller()}">-->
+    </div>
+    <br>
+</div>
+
+</body>
+</html>

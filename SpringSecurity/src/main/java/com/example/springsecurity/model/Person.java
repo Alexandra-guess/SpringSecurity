@@ -1,7 +1,9 @@
 package com.example.springsecurity.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -20,8 +22,9 @@ public class Person {
 
 
     @NotEmpty(message = "Логин не может быть пустым")
-    @Size(min = 5, max =100, message="Minimum number of 5 digits")
     @Column(name = "password")
+    @Max(value = 100, message ="Пароль должен быть не больше 100 значений")
+    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message="Пароль должен содержать Строчные и прописные латинские буквы, цифры, спецсимволы. Минимум 8 символов")
     private String password;
 
     @Column(name = "role")

@@ -46,7 +46,7 @@ protected void configure(HttpSecurity httpSecurity) throws Exception {
                        .antMatchers("/admin").hasRole("ADMIN")
 
                      // Указыаем что данные страницы доступна все пользователям
-                       .antMatchers("/authentication/login","/authentication/registration", "/error").permitAll()
+                       .antMatchers("/authentication/login","/authentication/registration","/product" ,"/error", "/img/**", "/product/info/{id}").permitAll()
 //                     //Указываем что для всех страниц вызываем метод аутентификации
 //                     .anyRequest().authenticated()
                        .anyRequest().hasAnyRole("USER", "ADMIN")
