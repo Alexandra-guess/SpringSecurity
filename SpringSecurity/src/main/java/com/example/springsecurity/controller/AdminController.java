@@ -3,6 +3,7 @@ package com.example.springsecurity.controller;
 
 import com.example.springsecurity.model.Image;
 import com.example.springsecurity.model.Product;
+import com.example.springsecurity.repositories.CategoryRepository;
 import com.example.springsecurity.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,9 +27,12 @@ public class AdminController {
 
     private final ProductService productService;
 
+    private final CategoryRepository categoryRepository;
+
     @Autowired
-    public AdminController(ProductService productService) {
+    public AdminController(ProductService productService, CategoryRepository categoryRepository) {
         this.productService = productService;
+        this.categoryRepository = categoryRepository;
     }
 
 
@@ -42,14 +46,15 @@ public class AdminController {
         @GetMapping("/product/add")
         public String addProduct(Model model){
         model.addAttribute("product", new Product());
-        return "product/AddProduct";
+            model.addAttribute("category", categoryRepository.findAll());
+            return "product/AddProduct";
         }
 
     // Метод по добавлению продукта в БД через сервис->репозиторий
     @PostMapping("/product/add")
 //    public String addProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @RequestParam("file_one")MultipartFile file_one, @RequestParam("file_two")MultipartFile file_two, @RequestParam("file_three")MultipartFile file_three, @RequestParam("file_four")MultipartFile file_four, @RequestParam("file_five") MultipartFile file_five) throws IOException
 
-    public String addProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @RequestParam("file_one")MultipartFile file_one,@RequestParam("file_two")MultipartFile file_two, @RequestParam("file_three")MultipartFile file_three, @RequestParam("file_four")MultipartFile file_four, @RequestParam("file_five") MultipartFile file_five ) throws IOException
+    public String addProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @RequestParam("file_one")MultipartFile file_one,@RequestParam("file_two")MultipartFile file_two, @RequestParam("file_three")MultipartFile file_three) throws IOException
 
     {
         if(bindingResult.hasErrors())
@@ -102,35 +107,35 @@ public class AdminController {
             product.addImageToProduct(image);
         }
 
-        if(file_four != null)
-        {
-            File uploadDir = new File(uploadPath);
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file_four.getOriginalFilename();
-            file_four.transferTo(new File(uploadPath + "/" + resultFileName));
-            Image image = new Image();
-            image.setProduct(product);
-            image.setFileName(resultFileName);
-            product.addImageToProduct(image);
-        }
-
-        if(file_five != null)
-        {
-            File uploadDir = new File(uploadPath);
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file_five.getOriginalFilename();
-            file_five.transferTo(new File(uploadPath + "/" + resultFileName));
-            Image image = new Image();
-            image.setProduct(product);
-            image.setFileName(resultFileName);
-            product.addImageToProduct(image);
-        }
+//        if(file_four != null)
+//        {
+//            File uploadDir = new File(uploadPath);
+//            if(!uploadDir.exists()){
+//                uploadDir.mkdir();
+//            }
+//            String uuidFile = UUID.randomUUID().toString();
+//            String resultFileName = uuidFile + "." + file_four.getOriginalFilename();
+//            file_four.transferTo(new File(uploadPath + "/" + resultFileName));
+//            Image image = new Image();
+//            image.setProduct(product);
+//            image.setFileName(resultFileName);
+//            product.addImageToProduct(image);
+//        }
+//
+//        if(file_five != null)
+//        {
+//            File uploadDir = new File(uploadPath);
+//            if(!uploadDir.exists()){
+//                uploadDir.mkdir();
+//            }
+//            String uuidFile = UUID.randomUUID().toString();
+//            String resultFileName = uuidFile + "." + file_five.getOriginalFilename();
+//            file_five.transferTo(new File(uploadPath + "/" + resultFileName));
+//            Image image = new Image();
+//            image.setProduct(product);
+//            image.setFileName(resultFileName);
+//            product.addImageToProduct(image);
+//        }
         productService.saveProduct(product);
         return "redirect:/admin";
     }
@@ -142,17 +147,25 @@ public class AdminController {
         return "redirect:/admin";
         }
 
-    //редактирование товара
+    // Метод по отображению страницы с возможностью редактирования товаров
     @GetMapping("/product/edit/{id}")
     public String editProduct(Model model, @PathVariable("id") int id){
         model.addAttribute("product", productService.getProductId(id));
+        model.addAttribute("category", categoryRepository.findAll());
         return "product/editProduct";
     }
+
+    // Метод по редактированию товара
     @PostMapping("/product/edit/{id}")
-    public String editProduct(@ModelAttribute("product") Product product, @PathVariable("id") int id){
+    public String editProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @PathVariable("id") int id){
+        if(bindingResult.hasErrors())
+        {
+            return "product/editProduct";
+        }
         productService.updateProduct(id, product);
         return "redirect:/admin";
     }
+
 
 
 

@@ -5,6 +5,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
@@ -29,6 +30,15 @@ public class Person {
 
     @Column(name = "role")
     private String role;
+
+    @ManyToMany()
+    @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> product;
+
+    @OneToMany(mappedBy = "person")
+    private List<Order> orderList;
+
+
 
     public String getRole() {
         return role;
