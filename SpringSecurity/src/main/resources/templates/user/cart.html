@@ -3,24 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <title>Корзина товаров</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <link th:href="@{/css/style.css}" type="text/css" rel="stylesheet" >
 </head>
 <body>
-<h3>Корзина товаров</h3>
 
-<div th:each="product : ${cart_product}">
-  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="100px">
-  <br>
-  <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
-  <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-  <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
-  <hr>
+<div class="text-center">
+  <div class="container-fluid bg-dark bg-gradient text-center htop">
+    <div class="row mb-4">
+      <div class="col fs-6 text">
+        <a class="item" aria-current="page" href="/index">
+          Винный бутик LE CORTE
+        </a>
+      </div>
+      <div class="col fs-6 text d-flex justify-content-end mleft">
+        <a class="item" th:action="@{/orders}" href="/orders">&#127863;
+          Мои заказы</a>
+      </div>
+      <div class="col fs-6 text">
+        <a class="item" th:action="@{/cart}" href="/cart">🛒 Корзина</a>
+        </a>
+      </div>
+      <div class="col fs-6 text">
+        <div>
+          <a class="item" th:action="@{/logout}" href="/index">&#128682;
+            Личный кабинета</a>
+          <span class="px-2"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fliud">
+    <div class="row hr">
+      <div class="col  fs-6 text">
+        <a class="item text-dark" href="/index ">Главная</a>
+      </div>
+      <div class="col  fs-6 text">
+        <a class="item text-dark" href="/product">Каталог</a>
+      </div>
+      <div class="col  fs-6 text">
+        <a class="item text-dark" href="#end">Контакты</a>
+      </div>
+    </div>
+
+  </div>
 </div>
-<h3 th:text="'Итоговая цена: ' + ${price}"></h3>
-<a href="/order/create">Оформить заказ</a>
 
-<br>
-<a href="/product">Перейти в каталог</a>
-<br>
-<a href="/index">Перейти в личный кабинет</a>
+
+<section class="h-100">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-normal mb-0 text-black">Корзина</h3>
+          <div>
+          </div>
+        </div>
+
+        <div th:each="product : ${cart_product}" class="card rounded-3 mb-4">
+          <div class="card-body p-4">
+            <div class="row d-flex justify-content-between align-items-center">
+              <div class="col-md-2 col-lg-2 col-xl-2">
+                <img
+                        th:src="'/img/' + ${product.imageList[0].getFileName()}" height="200px"
+                        class="img-fluid rounded-3">
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-3">
+                <p class="lead fw-normal mb-2">  <a th:class="text-dark" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a></p>
+              </div>
+
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                <h6 th:text="'Цена: ' + ${product.getPrice()}" class="mb-0"></h6>
+              </div>
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                <a th:class="text-dark" th:href="@{/cart/delete/{id}(id=${product.getId()})}" class="mb-0" >Удалить</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body p-4 d-flex flex-row">
+            <div class="form-outline flex-fill">
+              <h6 th:text="'Итоговая цена: ' + ${price} + ' руб'"></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <a href="/order/create" type="button" class="btn btn-warning btn-block btn-lg" value="Оформить заказ">Оформить заказ</a>
+          </div>
+          <div class="card">
+            <div class="card-body d-flex justify-content-end" >
+              <a href="/index" type="button" class="btn btn-warning btn-block btn-lg">Назад</a>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!--<h3>Корзина товаров</h3>-->
+
+<!--<div th:each="product : ${cart_product}">-->
+<!--  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="100px">-->
+<!--  <br>-->
+<!--  <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--  <p th:text="'Цена: ' + ${product.getPrice()}"></p>-->
+<!--  <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>-->
+<!--  <hr>-->
+<!--</div>-->
+<!--<h3 th:text="'Итоговая цена: ' + ${price}"></h3>-->
+<!--<a href="/order/create">Оформить заказ</a>-->
+
+<!--<br>-->
+<!--<a href="/product">Перейти в каталог</a>-->
+<!--<br>-->
+<!--<a href="/index">Перейти в личный кабинет</a>-->
 </body>
 </html>

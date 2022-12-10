@@ -24,6 +24,9 @@ public class Product {
     @NotEmpty(message = "Описание товара не может быть пустым")
     private String description;
 
+    @Column(name = "minidescription", columnDefinition = "text")
+    private String minidescription;
+
     @Column(name = "price", nullable = false)
     @Min(value = 1, message = "Цена не может быть отрицательной или нулевой")
     private float price;
@@ -64,7 +67,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Order> orderList;
 
-
+    private Status status;
 
     public Integer getId() {
         return id;
@@ -137,6 +140,38 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getMinidescription() {
+        return minidescription;
+    }
+
+    public void setMinidescription(String minidescription) {
+        this.minidescription = minidescription;
     }
 }
 

@@ -24,8 +24,7 @@ public class Person {
 
     @NotEmpty(message = "Логин не может быть пустым")
     @Column(name = "password")
-    @Max(value = 100, message ="Пароль должен быть не больше 100 значений")
-    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message="Пароль должен содержать Строчные и прописные латинские буквы, цифры, спецсимволы. Минимум 8 символов")
+//    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$", message="Пароль должен содержать Строчные и прописные латинские буквы, цифры, спецсимволы. Минимум 8 символов")
     private String password;
 
     @Column(name = "role")
@@ -80,5 +79,17 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", product=" + product +
+                ", orderList=" + orderList +
+                '}';
     }
 }

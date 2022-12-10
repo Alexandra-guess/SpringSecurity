@@ -48,9 +48,14 @@ public class MainController {
         {
             return "redirect:/admin";
         }
+        else if(role.equals("ROLE_SELLER")){
+            return "redirect:/seller";
+        }
         model.addAttribute("product", productService.getAllProducts());
         return "index";
     }
+
+
 
     @GetMapping("/cart/add/{id}")
     public String addProductInCart(@PathVariable("id") int id, Model model){
@@ -110,13 +115,24 @@ public class MainController {
             price += product.getPrice();
         }
 
+//        String uuid = UUID.randomUUID().toString();
+//        for (Product product: productsList){
+//            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(), Status.Ожидает);
+//            orderRepository.save(newOrder);
+//            cartRepository.deleteCartByProductId(product.getId());
+//        }
+//        return "redirect:/orders";
+
         String uuid = UUID.randomUUID().toString();
         for (Product product: productsList){
-            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(), Status.Получен);
+            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(),"Новый");
+
             orderRepository.save(newOrder);
             cartRepository.deleteCartByProductId(product.getId());
         }
         return "redirect:/orders";
+
+
     }
 
     @GetMapping("/orders")
@@ -127,5 +143,8 @@ public class MainController {
         model.addAttribute("orders", orderList);
         return "/user/orders";
     }
+
+
+
 
 }

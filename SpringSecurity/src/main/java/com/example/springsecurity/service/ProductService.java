@@ -43,6 +43,7 @@ public class ProductService {
         productRepository.deleteById(id);
 
     }
+
     //Обновляем  продукты
     @Transactional
     public void updateProduct(int id,Product product){

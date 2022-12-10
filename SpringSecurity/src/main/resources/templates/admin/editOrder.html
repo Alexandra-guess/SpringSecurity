@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактировать заказ </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <link th:href="@{/css/style2.css}" type="text/css" rel="stylesheet" >
+  <link th:href="@{/css/style3.css}" type="text/css" rel="stylesheet" >
+
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+</head>
+<body class="page-top">
+
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+      <p class="text-white">Панель Администратора</p>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+      Работа с товарами
+    </div>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/admin/product/add">
+        <span>Добавить товар</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/product">
+        <span>Перейти в каталог</span>
+      </a>
+    </li>
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+      Работа с пользователями
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/admin/user" >
+        <span>Пользователи</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/admin/user/new" >
+        <span>Добавить пользователя</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/admin/order" >
+        <span>Заказы</span>
+      </a>
+    </li>
+  </ul>
+
+
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <ul class="navbar-nav ml-auto">
+          <div class="topbar-divider d-none d-sm-block"></div>
+          <!-- Nav Item - User Information -->
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="/admin" id="userDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Админ</span>
+              <img class="img-profile rounded-circle"
+                   src=https://www.247virtualassistants.com/assets2022/img/usernew.jpg>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <div class="topbar-divider d-none d-sm-block"></div>
+          <!-- Nav Item - User Information -->
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="/logout" id="" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Выйти из личного кабинета</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="container-fluid">
+
+        <form th:action="@{/admin/order/edit/{id}(id=${order.getId()})}" method="post" style="max-width: 700px; margin: 0 auto" th:object="${order}">
+          <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+
+              <div class="col-sm-8">
+                <label class="col-sm-4 col-form-label" for="number">NUMBER</label>
+                <input type="text" class="form-control" th:field="*{number}" id="number" >
+
+                <label class="col-sm-4 col-form-label" for="product">PRODUCT</label>
+                <input type="text" class="form-control" th:field="*{product}" id="product" >
+
+                <label class="col-sm-4 col-form-label" for="person">PERSON</label>
+                <input type="text" class="form-control" th:field="*{person}" id="person" >
+
+                <label class="col-sm-4 col-form-label" for="count">COUNT</label>
+                <input type="text" class="form-control" th:field="*{count}" id="count" >
+
+                <label class="col-sm-4 col-form-label" for="price">PRICE</label>
+                <input type="text" class="form-control" th:field="*{price}" id="price" >
+
+                <label class="col-sm-4 col-form-label" for="date">DATE</label>
+                <input type="text" class="form-control" th:field="*{dateTime}" id="date" >
+
+                <label class="col-sm-4 col-form-label" for="status">STATUS</label>
+                <input type="text" class="form-control" th:field="*{statusInfo}" id="status">
+
+<!--                <select th:field="*{status}">-->
+<!--                  <option th:each="os: ${T(c.s.c.e.order.OrderStatus).values()}" th:value="${os}" th:text="${os}" >-->
+
+<!--                  </option>-->
+<!--                </select>-->
+
+              </div>
+            </div>
+<!--            <div class="form-group row">-->
+<!--              <label class="col-sm-4 col-form-label" for="password">PASSWORD</label>-->
+<!--              <div class="col-sm-8">-->
+<!--                <input type="password" class="form-control" th:field="*{password}" id="password">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="form-group row">-->
+<!--              <label class="col-sm-4 col-form-label" for="role">ROLE</label>-->
+<!--              <div class="col-sm-8">-->
+<!--                <input type="text" class="form-control" th:field="*{role}" id="role">-->
+<!--              </div>-->
+<!--            </div>-->
+
+            <div class="text-center">
+              <input type="submit" value="Save" class="btn btn-primary m-3">
+              <a class="btn btn-secondary" href="/admin/order">Отмена</a>
+
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

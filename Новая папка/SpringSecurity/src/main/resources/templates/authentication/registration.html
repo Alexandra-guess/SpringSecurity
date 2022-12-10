@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<div>
+  <h3>Регистрация</h3>
+  <form th:action="@{/authentication/registration}" th:object="${person}" method="post">
+
+    <label for="username"> Введите логин</label>
+    <br>
+    <input type="text" th:field="*{login}" name="username"placeholder="Введите Ваш логин" id="username">
+    <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"> </div>
+
+    <br>
+    <label for="password"> Введите пароль</label>
+    <br>
+    <input type="password" th:field="*{password}" name="password"placeholder="Введите Ваш пароль" id="password">
+    <br>
+    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> </div>
+    <br>
+
+    <input type="submit" value="Зарегистрироваться">
+  </form>
+</div>
+
+
+</body>
+</html>

@@ -1,89 +1,262 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Список товаров </title>
+    <title>Каталог</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link th:href="@{/css/style.css}" type="text/css" rel="stylesheet" >
 </head>
 <body>
 
-<div class="d-flex justify-content-end">
-    <form th:method="POST" th:action="@{/product/search}">
-        <br>
-        <label for="search">Поиск по наименованию</label>
-        <input name="search" id="search" th:value="*{value_search}">
-        <br>
-        <p>Цена, ₽</p>
-        <label for="after">От</label>
-        <input type="text" name="after" id="after" th:value="*{value_price_after}">
-        <label for="before">До</label>
-        <input type="text" name="before" id="before" th:value="*{value_price_before}">
-        <br>
-        <br>
-        <div>
-            <label for="ascending_price">Отсортировать по возрастанию цены</label>
-            <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
-            <br>
-            <br>
-            <label for="descending_price">Отсортировать по убыванию цены</label>
-            <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
-            <p>Категория товаров: </p>
-            <label for="smartphone">Смартфоны</label>
-            <input type="radio" id="smartphone" name="contact" value="smartphone">
-            <br>
-            <label for="tab">Планшеты</label>
-            <input type="radio" id="tab" name="contact" value="tab">
-            <br>
-            <label for="pc">Ноутбуки</label>
-            <input type="radio" id="pc" name="contact" value="pc">
-            <br>
-            <label for="tv">Телевизоры</label>
-            <input type="radio" id="tv" name="contact" value="tv">
-            <br>
-            <input type="submit" value="Найти">
+<style>
+    .row{
+        justify-content:flex-end !important;
+    }
+    .catalog{
+        padding-right: 70px;
+    }
+    .offcanvas{
+        width: 27%!important;
+
+    }
+</style>
+
+<div class="text-center">
+    <div class="container-fluid bg-dark bg-gradient text-center htop">
+        <div class="row mb-4">
+            <div class="col fs-6 text">
+                <a class="item" aria-current="page" href="/product">
+                    Винный бутик LE CORTE
+                </a>
+            </div>
+            <div class="col fs-6 text d-flex justify-content-end mleft">
+                <a class="item" th:action="@{/orders}" href="/orders">&#127863;
+                    Мои заказы</a>
+            </div>
+            <div class="col fs-6 text">
+                <a class="item" th:action="@{/cart}" href="/cart">🛒 Корзина</a>
+                </a>
+            </div>
+            <div class="col fs-6 text">
+                <a class="item" th:action="@{/admin}" href="/admin">Панель администратора</a>
+                </a>
+            </div>
+            <div class="col fs-6 text">
+                <div>
+                    <a class="item" th:action="@{/logout}" href="/index">&#128682;
+                        Личный кабинета</a>
+                    <span class="px-2"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fliud bg1 bg-dark pb-5">
+        <div class="row hr">
+            <div class="col  fs-6 text">
+                <a class="item " href="/product">Главная</a>
+            </div>
+            <div class="col  fs-6 text">
+                <a class="item " href="/product">Каталог</a>
+            </div>
+            <div class="col  fs-6 text">
+                <a class="item " href="#end">Контакты</a>
+            </div>
         </div>
 
-    </form>
+    </div>
 </div>
 
-<hr>
+<div class="text-center bg1 pt-5">
+    <a href="#"><img class="mx-auto block" src="https://imageup.ru/img76/4101203/untitled.jpg" height="390px" alt=""></a>
+</div>
 
-<div class="ms-4">
-    <h4> Результат поиска:</h4>
+<div class="catalog container-fluid" >
 
-    <div th:each="product : ${search_product}">
-        <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="200px">
-        <br>
-        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
-        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-        <p th:text="'Категория товара: '+ ${product.getCategory().getName()}"></p>
-        <hr>
+    <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Поиск и сортировка</button>
+
+    <div class="col-sm-5">
+        <div class="mt-5 mb-5">
+            <h5>Свадебным агенствам</h5>
+            <a href="mailto:mail@mail.ru"><img src="https://imageup.ru/img212/4101183/rectangle-2382.jpg" alt="" width="300px" > </a>
+        </div>
+        <div class="">
+            <h5>Корпоративным клиетам</h5>
+            <a href="mailto:mail@mail.ru"><img src="https://imageup.ru/img190/4101190/rectangle-2378.jpg" alt="" width="300px" ></a>
+        </div>
+        <div class="mt-5 mb-5">
+            <h5>Доставка</h5>
+            <a href="mailto:mail@mail.ru"><img src="https://imageup.ru/img171/4101187/rectangle-2390.jpg" alt="" width="300px" ></a>
+        </div>
     </div>
 
-</div>
-<hr>
+    <div class="row mb-6">
+
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Поиск по наименованию</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
 
 
+<!--            <div class="col-sm-5">-->
+<!--                <div class="ms-5">-->
 
 
+            <div class="offcanvas-body">
+                <div class="">
+                    <div class="">
 
+                        <form  th:method="POST" th:action="@{/product/search}">
+                            <div class="mb-1 ">
+                                <label for="search"></label>
+                                <input name="search" id="search" th:value="*{value_search}">
+                            </div>
+                            <div class="mt-4">
+                                <h6 class="">Цена, ₽</h6>
+                                <label for="after">От</label>
+                                <input type="text" name="after" id="after" th:value="*{value_price_after}">
+                                <br>
+                                <label for="before">До</label>
+                                <input type="text" name="before" id="before" th:value="*{value_price_before}">
+                            </div>
+                            <div class="mt-4">
+                                <label for="ascending_price">Отсортировать по возрастанию цены</label>
+                                <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+                                <br>
+                                <br>
+                                <label for="descending_price">Отсортировать по убыванию цены</label>
+                                <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+                            </div>
 
+                            <div class="mt-4 mb-4">
+                                <p>Категории товаров: </p>
+                                <label for="white">Белое</label>
+                                <input type="radio" id="white" name="contact" value="white">
+                                <br>
+                                <label for="red">Красное</label>
+                                <input type="radio" id="red" name="contact" value="red">
+                                <br>
+                                <label for="sparkling">Игристые</label>
+                                <input type="radio" id="sparkling" name="contact" value="sparkling">
+                                <br>
+                                <label for="basket">Подарочные корзины</label>
+                                <input type="radio" id="basket" name="contact" value="basket">
+                                <br>
+                            </div>
+                            <input class="btn" type="submit" value="Найти">
+                        </form>
 
-<div class="ms-4">
-  <h4 class="justify-content-center">Доступные товары:</h4>
-    <hr>
-    <div th:each="product: ${product}">
-        <img th:src="'/img/'+${product.imageList[0].getFileName()}"width="200px">
-        <br>
-        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+<!--                        <h5 class=""> Результат поиска:</h5>-->
 
-        <p  class="fw-semibold" th:text="'Наименоване: '+${product.getTitle()}" width="200px">
-        <p th:text="'Цена: '+${product.getPrice()}">
-        <p th:text="'Категория товара: '+ ${product.getCategory().getName()}"></p>
-        <hr>
+                        <div class="row row-cols-1 row-cols-md-1 g-4 text-dark mt-5">
+                            <div class="col" th:each="product : ${search_product}">
+                                <div class="card h-100" >
+                                    <img class="mx-auto d-block" th:src="'/img/' + ${product.imageList[0].getFileName()}" height="150px">
+                                    <div class="card-body text-center">
+                                        <a class="card-title text-dark" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+                                        <p  class="text-dark" th:text="'Цена: ' + ${product.getPrice()}"></p>
+                                        <a class="wine-btn btn" th:href="@{/cart/add/{id}(id=${product.getId()})}" value="Добавить в корзину">Добавить в корзину</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-9" style="margin-top: -1050px">
+            <div class="ms-4">
+
+                <div class="catslog-top container">
+<!--                    <h5 id="collection"></h5>-->
+
+                    <div class="row row-cols-1 row-cols-md-3 g-4 text-dark mt-5">
+                        <div class="col" th:each="product : ${product}">
+                            <div class="card h-100" >
+                                <img class="mx-auto d-block" th:src="'/img/' + ${product.imageList[0].getFileName()}" height="200px">
+                                <div class="card-body text-center">
+                                    <a class="card-title text-dark" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+                                    <p  class="text-dark" th:text="'Описание: ' + ${product.getMinidescription()}"></p>
+                                    <p  class="text-dark" th:text="'Цена: ' + ${product.getPrice()} +' руб'"></p>
+                                    <a class="wine-btn btn" th:href="@{/cart/add/{id}(id=${product.getId()})}" value="Добавить в корзину">Добавить в корзину</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <br>
 </div>
+</div>
+
+<div class="text-center bg1 pt-5">
+    <a href="#"><img class="mx-auto mb-5" src="https://imageup.ru/img276/4103527/snimok.jpg" width="800px" alt=""></a>
+</div>
+
+<footer class="bg-dark bg-gradient">
+    <div
+            class="container-md text-center container-fliud pt-5"
+    >
+        <div class="row">
+            <div class="col ">
+                <a class="item" aria-current="page" href="/product ">
+                    Главная
+                </a>
+            </div>
+            <div class="col ">
+                <a class="item" href="/product">Каталог</a>
+            </div>
+            <div class="col ">
+                <a email="mail@mail.ru" class="item" href="mailto:mail@mail.ru">Написать нам</a>
+
+            </div>
+        </div>
+        <div class="row pt-5 pb-5">
+            <div class="col  ">
+                <a class="item" aria-current="page" href="# ">
+                    Винный бутик LE CORTE
+                </a>
+            </div>
+            <div id="end" class="col  ">
+                <a tel="" class="item" href="tel:+78121234567">
+                    +7 (812) 123-45-67
+                </a>
+            </div>
+            <div class="col   fs-6 text">
+                <div class="social telegram item">
+                    <a href="#" target="_blank">
+                        <svg role="img" viewBox="0 0 448 512">
+                            <path fill="currentColor" d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="social instagram item">
+                    <a href="#" target="_blank">
+                        <svg role="img" viewBox="0 0 448 512">
+                            <path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="social whatsapp item">
+                    <a href="#" target="_blank">
+                        <svg role="img" viewBox="0 0 448 512">
+                            <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col  ">
+                <a class="item" href="# ">© le-corte.ru</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
 
 

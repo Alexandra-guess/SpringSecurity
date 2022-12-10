@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список зарегестрированных пользователей</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link th:href="@{/css/style2.css}" type="text/css" rel="stylesheet" >
+    <link th:href="@{/css/style3.css}" type="text/css" rel="stylesheet" >
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+</head>
+<body class="page-top">
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <p class="text-white">Панель Администратора</p>
+        </li>
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+            Работа с товарами
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/product/add">
+                <span>Добавить товар</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/product">
+                <span>Перейти в каталог</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Работа с пользователями
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/user" >
+                <span>Пользователи</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/user/new" >
+                <span>Добавить пользователя</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/order" >
+                <span>Заказы</span>
+            </a>
+        </li>
+    </ul>
+
+
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <ul class="navbar-nav ml-auto">
+                    <div class="topbar-divider d-none d-sm-block"></div>
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="/admin" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Админ</span>
+                            <img class="img-profile rounded-circle"
+                                 src=https://www.247virtualassistants.com/assets2022/img/usernew.jpg>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <div class="topbar-divider d-none d-sm-block"></div>
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="/logout" id="" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Выйти из личного кабинета</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div th:if="${message != null}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
+<div class="container-fluid">
+    <table class="table table-responsive-lg">
+        <thead class="thead-dark">
+        <tr>
+            <th>USER ID</th>
+            <th>ROLES</th>
+            <th>LOGIN</th>
+            <th>MANAGE</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${getUser}">
+            <td> <a th:href="@{/admin/user/{id}(id=${user.getId()})}" th:text="${user.getId()}"></a></td>
+            <td> <a th:href="@{/admin/user/{id}(id=${user.getId()})}" th:text="${user.getRole()}"></a></td>
+            <td> <a th:href="@{/admin/user/{id}(id=${user.getId()})}" th:text="${user.getLogin()}"></a></td>
+            <td> <a th:href="@{/admin/user/edit/{id}(id=${user.getId()})}">Редактировать</a></td>
+            <td> <a th:href="@{/admin/user/delete/{id}(id=${user.getId()})}" class="link-delete">Удалить</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+</div>
+
+<!--<div class="modal fade text-center" id="modalDialog">-->
+<!--    <div>-->
+
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        $(".link-delete").on("click", function(e){-->
+<!--            e.preventDefault();-->
+<!--            alert(-->
+<!--                $this.attr("href")-->
+<!--            );-->
+<!--        });-->
+
+
+<!--    });-->
+
+<!--</script>-->
+
+
+<!--<script type="text/javascript">-->
+
+<!--    ${document}.ready(function(){-->
+<!--        $(".link-delete").on("click", function(e){-->
+<!--            e.preventDefault();-->
+<!--            alert($(this).attr("href"));-->
+<!--        });-->
+<!--    });-->
+
+
+
+</script>
+
+
+</body>
+</html>

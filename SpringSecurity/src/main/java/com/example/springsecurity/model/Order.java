@@ -14,9 +14,11 @@ public class Order {
     private String number;
 
     @ManyToOne(optional = false)
+//    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne(optional = false)
+//    @JoinColumn(name = "person_id")
     private Person person;
 
     private int count;
@@ -24,7 +26,11 @@ public class Order {
 
     private LocalDateTime dateTime;
 
-    private Status status;
+//    @Enumerated(EnumType.STRING)
+//    private Status status;
+
+    @Column(name = "statusInfo")
+    private String statusInfo;
 
     // Будем заполнять дату и время при создании объекта класса
     @PrePersist
@@ -36,13 +42,13 @@ public class Order {
     public Order() {
     }
 
-    public Order(String number, Product product, Person person, int count, float price,  Status status) {
+    public Order(String number, Product product, Person person, int count, float price, String statusInfo) {
         this.number = number;
         this.product = product;
         this.person = person;
         this.count = count;
         this.price = price;
-        this.status = status;
+        this.statusInfo = statusInfo;
     }
 
     public String getNumber() {
@@ -93,11 +99,27 @@ public class Order {
         this.dateTime = dateTime;
     }
 
-    public Status getStatus() {
-        return status;
+//    public Status getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(Status status) {
+//        this.status = status;
+//    }
+
+    public int getId() {
+        return id;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStatusInfo() {
+        return statusInfo;
+    }
+
+    public void setStatusInfo(String statusInfo) {
+        this.statusInfo = statusInfo;
     }
 }

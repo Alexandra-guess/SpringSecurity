@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -45,11 +46,13 @@ protected void configure(HttpSecurity httpSecurity) throws Exception {
                        // указываем что страница /admin доступна пользователю с ролью ADMIN
                        .antMatchers("/admin").hasRole("ADMIN")
 
+                                .antMatchers("/seller").hasRole("SELLER")
+
                      // Указыаем что данные страницы доступна все пользователям
-                       .antMatchers("/authentication/login","/authentication/registration","/product" ,"/error", "/img/**",  "/product/info/{id}").permitAll()
+                       .antMatchers("/authentication/login","/authentication/registration","/product" ,"/error", "/img/**",  "/product/info/{id}", "/product/search").permitAll()
 //                     //Указываем что для всех страниц вызываем метод аутентификации
 //                     .anyRequest().authenticated()
-                       .anyRequest().hasAnyRole("USER", "ADMIN")
+                       .anyRequest().hasAnyRole("USER", "ADMIN", "SELLER")
 
                         .and()
                 //Указываем на какой настроить фильтр Spring Security будет отправлять нового пользователя
@@ -67,6 +70,7 @@ protected void configure(HttpSecurity httpSecurity) throws Exception {
 
 
 
+
 }
 
     // Данный метод позволяет настроить аутентификацию
@@ -80,4 +84,15 @@ protected void configure(HttpSecurity httpSecurity) throws Exception {
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+
+    @Override
+    public void configure(WebSecurity web){
+        web.ignoring()
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**");
+    }
+
+
+
+
 }

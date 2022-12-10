@@ -43,16 +43,16 @@ public class ProductController {
                 if (price.equals("sorted_by_ascending_price")){
                         if (!contact.isEmpty()) {
 
-                            if (contact.equals("smartphone")){
+                            if (contact.equals("white")){
                                 model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 1 ));
                             }
-                            else if (contact.equals("pc")){
+                            else if (contact.equals("red")){
                                 model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 2 ));
                             }
-                            else if (contact.equals("tv")){
+                            else if (contact.equals("sparkling")){
                                 model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 3 ));
                             }
-                            else if (contact.equals("tab")){
+                            else if (contact.equals("basket")){
                                 model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 4 ));
                             }
 
@@ -62,16 +62,16 @@ public class ProductController {
 
                     if (!contact.isEmpty()) {
 
-                        if (contact.equals("smartphone")){
+                        if (contact.equals("white")){
                             model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 1 ));
                         }
-                        else if (contact.equals("pc")){
+                        else if (contact.equals("red")){
                             model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 2 ));
                         }
-                        else if (contact.equals("tv")){
+                        else if (contact.equals("sparkling")){
                             model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 3 ));
                         }
-                        else if (contact.equals("tab")){
+                        else if (contact.equals("basket")){
                             model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 4 ));
                         }
                     }
