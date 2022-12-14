@@ -74,20 +74,6 @@ public class ProductController {
                             model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 4 ));
                         }
                     }
-                }else if(!contact.isEmpty()) {
-
-                    if (contact.equals("white")){
-                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 1 ));
-                    }
-                    else if (contact.equals("red")){
-                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 2 ));
-                    }
-                    else if (contact.equals("sparkling")){
-                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 3 ));
-                    }
-                    else if (contact.equals("basket")){
-                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 4 ));
-                    }
                 }
 
             }
