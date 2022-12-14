@@ -169,12 +169,28 @@
 
         </div>
 
+
+<!--            //Результата поиска-->
         <div class="col-sm-9" style="margin-top: -1050px">
             <div class="ms-4">
 
-                <div class="catslog-top container">
+                <div class="row row-cols-1 row-cols-md-3 g-4 text-dark mt-5 mb-5 pb-5">
+                    <div class="col" th:each="product : ${search_product}">
+                        <div class="card h-100" >
+                            <img class="mx-auto d-block" th:src="'/img/' + ${product.imageList[0].getFileName()}" height="150px">
+                            <div class="card-body text-center">
+                                <a class="card-title text-dark" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+                                <p  class="text-dark" th:text="'Цена: ' + ${product.getPrice()}"></p>
+                                <a class="wine-btn btn" th:href="@{/cart/add/{id}(id=${product.getId()})}" value="Добавить в корзину">Добавить в корзину</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catslog-top container mt-5">
 <!--                    <h5 id="collection"></h5>-->
+                    <!--            //Вывод всех продуктов-->
 
+                    <h4 th:class="text-center">Наш каталог</h4>
                     <div class="row row-cols-1 row-cols-md-3 g-4 text-dark mt-5">
                         <div class="col" th:each="product : ${product}">
                             <div class="card h-100" >

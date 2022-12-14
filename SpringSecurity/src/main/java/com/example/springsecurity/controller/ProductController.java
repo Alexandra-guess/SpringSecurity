@@ -55,7 +55,6 @@ public class ProductController {
                             else if (contact.equals("basket")){
                                 model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 4 ));
                             }
-
                         }
 
                 }else if(price.equals("sorted_by_descending_price")) {
@@ -75,11 +74,48 @@ public class ProductController {
                             model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(),Float.parseFloat(after), Float.parseFloat(before), 4 ));
                         }
                     }
+                }else if(!contact.isEmpty()) {
+
+                    if (contact.equals("white")){
+                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 1 ));
+                    }
+                    else if (contact.equals("red")){
+                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 2 ));
+                    }
+                    else if (contact.equals("sparkling")){
+                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 3 ));
+                    }
+                    else if (contact.equals("basket")){
+                        model.addAttribute("search_product", productRepository.findByCategoryOrderByPriceDesc(Float.parseFloat(after), Float.parseFloat(before), 4 ));
+                    }
                 }
-            } else {
+
+            }
+
+            else {
                     model.addAttribute("search_product", productRepository.findByTitleAndPriceGreaterThanEqualAndPriceLessThanEqual(search, Float.parseFloat(after), Float.parseFloat(before)));}
-        } else {
-            model.addAttribute("search_product", productRepository.findByTitleContainingIgnoreCase(search));}
+        }
+        else if (!contact.isEmpty()) {
+
+            if (contact.equals("white")){
+                model.addAttribute("search_product", productRepository.findByCategory( 1 ));
+            }
+            else if (contact.equals("red")){
+                model.addAttribute("search_product", productRepository.findByCategory( 2 ));
+            }
+            else if (contact.equals("sparkling")){
+                model.addAttribute("search_product", productRepository.findByCategory( 3 ));
+            }
+            else if (contact.equals("basket")){
+                model.addAttribute("search_product", productRepository.findByCategory( 4 ));
+            }
+        }
+
+
+
+        else {
+            model.addAttribute("search_product", productRepository.findByTitleContainingIgnoreCase(search));
+        }
 
         model.addAttribute("value_search", search);
         model.addAttribute("value_price_after", after);
